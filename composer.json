@@ -6,10 +6,10 @@
     },
     "autoload": {
         "psr-4": {
-            "GatewayWorker\\": "src/gatewayworker/",
-            "GatewayClient\\": "src/gatewayclient/",
-            "Workerman\\": "src/workerman/",
-            "React\\EventLoop\\": "src/react/event-loop/src"
+            "GatewayWorker\\": "gatewayworker/",
+            "GatewayClient\\": "gatewayclient/",
+            "Workerman\\": "workerman/",
+            "React\\EventLoop\\": "react/event-loop/src"
         }
     }
 }
