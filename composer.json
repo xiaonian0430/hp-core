@@ -1,0 +1,15 @@
+{
+    "name": "hiper/hp-core",
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "GatewayWorker\\": "src/gatewayworker/",
+            "GatewayClient\\": "src/gatewayclient/",
+            "Workerman\\": "src/workerman/",
+            "React\\EventLoop\\": "src/react/event-loop/src"
+        }
+    }
+}
