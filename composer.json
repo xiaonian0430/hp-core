@@ -9,6 +9,7 @@
             "GatewayWorker\\": "gatewayworker/",
             "GatewayClient\\": "gatewayclient/",
             "Workerman\\": "workerman/",
+            "HP\\": "framework/",
             "React\\EventLoop\\": "react/event-loop/src"
         }
     }
