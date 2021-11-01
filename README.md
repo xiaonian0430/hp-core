@@ -16,8 +16,3 @@
     - 安装 pcntl 和 posix 扩展
     - 安装 redis 扩展
 
-## 安装和使用
-
-```
-composer install
-```
