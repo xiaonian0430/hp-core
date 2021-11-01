@@ -9,6 +9,7 @@ use Workerman\Protocols\Http\Request;
 use Workerman\Connection\TcpConnection;
 class App {
     public function __construct(TcpConnection $connection, Request $request) {
+        //路由分发: 模块=module 类=class 方法=function
         $path=trim($request->path(),'/');
         $dot=strpos($path, '.');
         if($dot===false){
