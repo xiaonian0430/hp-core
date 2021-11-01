@@ -17,9 +17,9 @@ class Controller {
         $this->request=$request;
     }
 
-    public function writeJson($statusCode , $result, $msg) {
+    public function writeJson($code , $result, $msg) {
         $body=json_encode([
-            "code" => $statusCode,
+            "code" => $code,
             "result" => !empty($result)?$result:['empty'=>1],
             "msg" => $msg
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
