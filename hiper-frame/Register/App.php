@@ -16,6 +16,10 @@ class App extends Core {
         $register = new Register($address);
         $register->name=CONFIG['REGISTER']['SERVER_NAME'];
 
+        if(CONFIG['HTTP_SERVER']['EVENT_LOOP']==1){
+            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        }
+
         Worker::runAll();
     }
 }

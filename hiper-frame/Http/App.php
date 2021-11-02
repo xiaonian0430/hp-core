@@ -27,6 +27,10 @@ class App extends Core {
             $this->onMessage($connection, $request);
         };
 
+        if(CONFIG['HTTP_SERVER']['EVENT_LOOP']==1){
+            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        }
+
         Worker::runAll();
     }
 

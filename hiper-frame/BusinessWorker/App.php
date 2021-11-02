@@ -26,6 +26,10 @@ class App extends Core {
 
         $business->eventHandler=CONFIG['BUSINESS']['EVENT_HANDLER'];
 
+        if(CONFIG['HTTP_SERVER']['EVENT_LOOP']==1){
+            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        }
+
         Worker::runAll();
     }
 }
