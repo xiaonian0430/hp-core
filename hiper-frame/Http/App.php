@@ -5,10 +5,32 @@
  * @datetime: 2019-12-01 14:00
  */
 namespace HP\Http;
+use HP\Core;
+use Workerman\Worker;
 use Workerman\Protocols\Http\Request;
 use Workerman\Connection\TcpConnection;
-class App {
-    public function __construct(TcpConnection $connection, Request $request) {
+class App extends Core {
+
+    public function run(){
+        //实例化
+        $address='http://'.CONFIG['HTTP_SERVER']['LISTEN_ADDRESS'].':'.CONFIG['HTTP_SERVER']['PORT'];
+        $http_server = new Worker($address);
+
+        //进程名称
+        $http_server->name= CONFIG['HTTP_SERVER']['SERVER_NAME'];
+
+        // 进程数量
+        $http_server->count = CONFIG['HTTP_SERVER']['PROCESS_COUNT'];
+
+        // 接收请求
+        $http_server->onMessage = function ($connection, $request) {
+            $this->onMessage($connection, $request);
+        };
+
+        Worker::runAll();
+    }
+
+    private function onMessage(TcpConnection $connection, Request $request) {
         //路由分发: 模块=module 类=class 方法=function
         $path=trim($request->path(),'/');
         $dot=strpos($path, '.');
