@@ -48,7 +48,37 @@ class Core {
         }else{
             exit($config_path." is not exist\n");
         }
-        defined('CONFIG') or define('CONFIG', $conf);
+        $conf_frame=[
+            'EVENT_LOOP'=>0,
+            'HTTP_SERVER'    => [
+                'SERVER_NAME'    => 'HTTP_SERVER',
+                'PROCESS_COUNT'     => 4,  //进程数
+                'LISTEN_ADDRESS' => '0.0.0.0',
+                'PORT'           => 5151
+            ],
+            'REGISTER'    => [
+                'SERVER_NAME'    => 'RegisterCenter',
+                'LISTEN_ADDRESS' => '0.0.0.0',
+                'PORT'           => 1236,
+                'LAN_IP'         => '127.0.0.1',
+                'LAN_PORT'       => 1236
+            ],
+            'GATEWAY'    => [
+                'SERVER_NAME'    => 'ChatGateway',
+                'LISTEN_ADDRESS' => '0.0.0.0',
+                'PORT'           => 7272,
+                'PROCESS_COUNT'     => 4,  //进程数
+                'PING_INTERVAL'  => 10,  //心跳间隔
+                'LAN_IP'         => '127.0.0.1', //分布式部署时请设置成内网ip（非127.0.0.1）
+                'LAN_START_PORT'     => 2300, //内部通讯起始端口
+            ],
+            'BUSINESS'    => [
+                'SERVER_NAME'    => 'BusinessWorker',
+                'PROCESS_COUNT'     => 4,  //进程数
+                'EVENT_HANDLER'       => 'Events'
+            ]
+        ];
+        defined('CONFIG') or define('CONFIG', array_merge($conf_frame, $conf));
 
         //初始化worker
         Worker::$stdoutFile = $log_path.'/error.log';
