@@ -40,7 +40,8 @@ class App extends Core {
         $registerAddress=CONFIG['REGISTER']['LAN_IP'].':'.CONFIG['REGISTER']['LAN_PORT'];
         $gateway->registerAddress = $registerAddress;
 
-        if(CONFIG['HTTP_SERVER']['EVENT_LOOP']==1){
+        //添加swoole轮询事件
+        if(CONFIG['EVENT_LOOP']==1){
             Worker::$eventLoopClass = 'Workerman\Events\Swoole';
         }
 
