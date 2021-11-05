@@ -23,7 +23,7 @@ use Monolog\Handler\StreamHandler;
  */
 class Log {
     private static $instance;
-    public function __construct() {
+    static function getInstance() {
         if(!isset(static::$instance)){
             static::$instance = new Logger('name');
             static::$instance->pushHandler(new StreamHandler(CONFIG['LOG_PATH'], Logger::WARNING));
@@ -38,6 +38,6 @@ class Log {
      */
     public static function __callStatic($name, $arguments)
     {
-        return static::$instance->{$name}(... $arguments);
+        return static::getInstance()->{$name}(... $arguments);
     }
 }
