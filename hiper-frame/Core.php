@@ -49,6 +49,7 @@ class Core {
             exit($config_path." is not exist\n");
         }
         $conf_frame=[
+            'LOG_PATH'=>$log_path.'/app.log',
             'EVENT_LOOP'=>0,
             'HTTP_SERVER'    => [
                 'SERVER_NAME'    => 'HTTP_SERVER',
