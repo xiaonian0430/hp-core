@@ -7,7 +7,7 @@
 namespace HP\Log;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-
+use Monolog\Formatter\LineFormatter;
 /**
  * 日志
  *
@@ -23,10 +23,18 @@ use Monolog\Handler\StreamHandler;
  */
 class Log {
     private static $instance;
-    static function getInstance() {
+    public static function getInstance() {
         if(!isset(static::$instance)){
-            static::$instance = new Logger('name');
-            static::$instance->pushHandler(new StreamHandler(CONFIG['LOG_PATH'], Logger::WARNING));
+            static::$instance = new Logger('APP');
+
+            $stream = new StreamHandler(CONFIG['LOG_PATH'], Logger::DEBUG);
+            // the default date format is "Y-m-d\TH:i:sP"
+            $dateFormat = "Y-m-d H:i:s";
+            //"[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n"
+            $output = "[%datetime%] %channel%.%level_name%: %message% %context%\n";
+            $formatter = new LineFormatter($output, $dateFormat);
+            $stream->setFormatter($formatter);
+            static::$instance->pushHandler($stream);
         }
         return static::$instance;
     }
