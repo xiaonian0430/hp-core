@@ -11,6 +11,8 @@ use Workerman\Connection\TcpConnection;
 class Core {
 
     public function __construct() {
+        ini_set('display_errors', 'on');
+        ini_set('date.timezone','Asia/Shanghai');
         defined('IN_PHAR') or define('IN_PHAR', boolval(\Phar::running(false)));
         defined('SERVER_ROOT') or define('SERVER_ROOT', IN_PHAR ? \Phar::running() : realpath(getcwd()));
         defined('PUBLIC_ROOT') or define('PUBLIC_ROOT', SERVER_ROOT.'/public'); //不能加后缀
