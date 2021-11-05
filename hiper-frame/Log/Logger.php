@@ -8,13 +8,13 @@ namespace HP\Log;
 use Monolog\Logger as MonologLogger;
 use Monolog\Handler\StreamHandler;
 
- class Logger {
-    public static $log;
-
-    public function __construct() {
-        if(!isset(static::$log)){
-            static::$log = new Logger('name');
-            static::$log->pushHandler(new StreamHandler(CONFIG['LOG_PATH'], MonologLogger::WARNING));
+class Logger {
+    private static $instance;
+    static function getInstance() {
+        if(!isset(static::$instance)){
+            static::$instance = new Logger('name');
+            static::$instance->pushHandler(new StreamHandler(CONFIG['LOG_PATH'], MonologLogger::WARNING));
         }
+        return static::$instance;
     }
 }
