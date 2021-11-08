@@ -11,7 +11,7 @@
 ## 系统和软件要求
 
 - centos v7.0 或更高版本
-- php v7.0 或更高版本
+- php v7.3 或更高版本
     - 安装 swoole 扩展
     - 安装 event 扩展
     - 安装 pcntl 和 posix 扩展
