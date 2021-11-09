@@ -30,13 +30,6 @@ class App extends Core {
             }catch (\Throwable $e){}
         };
 
-        $worker->onClose=function (){
-            $callback = $this->callback;
-            try{
-                $callback(0);
-            }catch (\Throwable $e){}
-        };
-
         if($run_able){
             Worker::runAll();
         }
