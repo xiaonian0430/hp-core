@@ -78,6 +78,10 @@ class Core {
                 'SERVER_NAME'    => 'BusinessWorker',
                 'PROCESS_COUNT'     => 4,  //进程数
                 'EVENT_HANDLER'       => 'Events'
+            ],
+            'TASK'    => [
+                'SERVER_NAME'    => 'TaskProcess',
+                'PROCESS_COUNT'     => 1,  //进程数
             ]
         ];
         defined('CONFIG') or define('CONFIG', array_merge($conf_frame, $conf));

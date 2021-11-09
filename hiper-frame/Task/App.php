@@ -16,8 +16,11 @@ class App extends Core {
         //实例化
         $worker = new Worker();
 
+        //进程名称
+        $worker->name= CONFIG['TASK']['SERVER_NAME'];
+
         // 启动1个进程对外提供服务
-        $worker->count = 1;
+        $worker->count = CONFIG['TASK']['PROCESS_COUNT'];;
 
         // 接收到浏览器发送的数据时回复hello world给浏览器
         $worker->onWorkerStart = function($worker){
