@@ -26,7 +26,14 @@ class App extends Core {
         $worker->onWorkerStart = function($worker){
             $callback = $this->callback;
             try{
-                $callback();
+                $callback(1);
+            }catch (\Throwable $e){}
+        };
+
+        $worker->onClose=function (){
+            $callback = $this->callback;
+            try{
+                $callback(0);
             }catch (\Throwable $e){}
         };
 
