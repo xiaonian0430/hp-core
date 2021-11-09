@@ -10,17 +10,14 @@ use Workerman\Worker;
 use GatewayWorker\Register;
 class App extends Core {
 
-    public function run(){
+    public function run($run_able=true, ?callable $callback = null){
         //实例化
         $address='text://'.CONFIG['REGISTER']['LISTEN_ADDRESS'].':'.CONFIG['REGISTER']['PORT'];
         $register = new Register($address);
         $register->name=CONFIG['REGISTER']['SERVER_NAME'];
 
-        //添加swoole轮询事件
-        if(CONFIG['EVENT_LOOP']==1){
-            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        if($run_able){
+            Worker::runAll();
         }
-
-        Worker::runAll();
     }
 }

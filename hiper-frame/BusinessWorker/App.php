@@ -10,7 +10,7 @@ use Workerman\Worker;
 use GatewayWorker\BusinessWorker;
 class App extends Core {
 
-    public function run(){
+    public function run($run_able=true, ?callable $callback = null){
         //实例化
         $business = new BusinessWorker();
 
@@ -26,11 +26,8 @@ class App extends Core {
 
         $business->eventHandler=CONFIG['BUSINESS']['EVENT_HANDLER'];
 
-        //添加swoole轮询事件
-        if(CONFIG['EVENT_LOOP']==1){
-            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        if($run_able){
+            Worker::runAll();
         }
-
-        Worker::runAll();
     }
 }

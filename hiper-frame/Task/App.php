@@ -9,10 +9,10 @@ use HP\Core;
 use Workerman\Worker;
 class App extends Core {
 
-    protected $consumeCallback;
+    protected $callback;
 
-    public function run(?callable $consumeCallback = null){
-        $this->consumeCallback=$consumeCallback;
+    public function run($run_able=true, ?callable $callback = null){
+        $this->callback=$callback;
         //实例化
         $worker = new Worker();
 
@@ -21,14 +21,14 @@ class App extends Core {
 
         // 接收到浏览器发送的数据时回复hello world给浏览器
         $worker->onWorkerStart = function($worker){
-            $consumeCallback = $this->consumeCallback;
+            $callback = $this->callback;
             try{
-                $consumeCallback();
+                $callback();
             }catch (\Throwable $e){}
         };
 
-        // 运行worker
-        Worker::runAll();
-
+        if($run_able){
+            Worker::runAll();
+        }
     }
 }

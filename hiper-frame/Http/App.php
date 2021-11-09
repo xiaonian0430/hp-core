@@ -11,7 +11,7 @@ use Workerman\Protocols\Http\Request;
 use Workerman\Connection\TcpConnection;
 class App extends Core {
 
-    public function run(){
+    public function run($run_able=true, ?callable $callback = null){
         //实例化
         $address='http://'.CONFIG['HTTP_SERVER']['LISTEN_ADDRESS'].':'.CONFIG['HTTP_SERVER']['PORT'];
         $http_server = new Worker($address);
@@ -27,12 +27,9 @@ class App extends Core {
             $this->onMessage($connection, $request);
         };
 
-        //添加swoole轮询事件
-        if(CONFIG['EVENT_LOOP']==1){
-            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        if($run_able){
+            Worker::runAll();
         }
-
-        Worker::runAll();
     }
 
     private function onMessage(TcpConnection $connection, Request $request) {

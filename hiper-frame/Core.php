@@ -6,8 +6,6 @@
  */
 namespace HP;
 use Workerman\Worker;
-use Workerman\Protocols\Http\Request;
-use Workerman\Connection\TcpConnection;
 class Core {
 
     public function __construct() {
@@ -50,9 +48,10 @@ class Core {
         }else{
             exit($config_path." is not exist\n");
         }
+        //EVENT_LOOP SWOOLE 1 其他 0
         $conf_frame=[
             'LOG_PATH'=>$log_path.'/app.log',
-            'EVENT_LOOP'=>0,
+            'EVENT_LOOP'=>1,
             'HTTP_SERVER'    => [
                 'SERVER_NAME'    => 'HTTP_SERVER',
                 'PROCESS_COUNT'     => 4,  //进程数
@@ -87,5 +86,14 @@ class Core {
         Worker::$stdoutFile = $log_path.'/error.log';
         Worker::$logFile = $log_path.'/log.log';
         Worker::$pidFile = $temp_path.'/pid.pid';
+
+        //添加swoole轮询事件
+        if(CONFIG['EVENT_LOOP']==1){
+            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        }
+    }
+
+    public function run($run_able=true, ?callable $callback = null){
+        //实例化
     }
 }

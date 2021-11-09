@@ -10,7 +10,7 @@ use Workerman\Worker;
 use GatewayWorker\Gateway;
 class App extends Core {
 
-    public function run(){
+    public function run($run_able=true, ?callable $callback = null){
         //实例化
         $address='Websocket://'.CONFIG['GATEWAY']['LISTEN_ADDRESS'].':'.CONFIG['GATEWAY']['PORT'];
         $gateway = new Gateway($address);
@@ -40,11 +40,8 @@ class App extends Core {
         $registerAddress=CONFIG['REGISTER']['LAN_IP'].':'.CONFIG['REGISTER']['LAN_PORT'];
         $gateway->registerAddress = $registerAddress;
 
-        //添加swoole轮询事件
-        if(CONFIG['EVENT_LOOP']==1){
-            Worker::$eventLoopClass = 'Workerman\Events\Swoole';
+        if($run_able){
+            Worker::runAll();
         }
-
-        Worker::runAll();
     }
 }
