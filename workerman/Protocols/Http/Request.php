@@ -163,7 +163,8 @@ class Request
     public function cookie($name = null, $default = null)
     {
         if (!isset($this->_data['cookie'])) {
-            \parse_str(\str_replace('; ', '&', $this->header('cookie')), $this->_data['cookie']);
+            $this->_data['cookie'] = array();
+            \parse_str(\str_replace('; ', '&', $this->header('cookie', '')), $this->_data['cookie']);
         }
         if ($name === null) {
             return $this->_data['cookie'];
@@ -250,7 +251,7 @@ class Request
     public function path()
     {
         if (!isset($this->_data['path'])) {
-            $this->_data['path'] = \parse_url($this->uri(), PHP_URL_PATH);
+            $this->_data['path'] = (string)\parse_url($this->uri(), PHP_URL_PATH);
         }
         return $this->_data['path'];
     }
@@ -263,7 +264,7 @@ class Request
     public function queryString()
     {
         if (!isset($this->_data['query_string'])) {
-            $this->_data['query_string'] = \parse_url($this->uri(), PHP_URL_QUERY);
+            $this->_data['query_string'] = (string)\parse_url($this->uri(), PHP_URL_QUERY);
         }
         return $this->_data['query_string'];
     }
@@ -545,7 +546,13 @@ class Request
                         else {
                             // Parse $_POST.
                             if (\preg_match('/name="(.*?)"$/', $header_value, $match)) {
-                                $this->_data['post'][$match[1]] = $boundary_value;
+                                $key = $match[1];
+                                if (\strlen($key) > 2 && \substr($key, -2) == '[]') {
+                                    $key = \substr($key, 0, -2);
+                                    $this->_data['post'][$key][] = $boundary_value;
+                                } else {
+                                    $this->_data['post'][$key] = $boundary_value;
+                                }
                             }
                         }
                         break;
